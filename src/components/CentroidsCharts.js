@@ -13,12 +13,9 @@ export default function (props) {
       </div>
 
       {/* chart */}
-      <div>
-        <Plot layout={{ width: 600, height: 500 }} />
+      <div className="flex justify-center">
+        <Plot layout={{ width: 400, height: 300 }} />
       </div>
-
-      {/* slider for years */}
-      <div></div>
     </div>
   );
 }

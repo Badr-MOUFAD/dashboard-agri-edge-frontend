@@ -1,6 +1,10 @@
 import React from "react";
 import Plot from "react-plotly.js";
-import { TitleComponent, ToggleComponent } from "./BasicComponents";
+import {
+  TitleComponent,
+  ToggleComponent,
+  SliderYears
+} from "./BasicComponents";
 
 export default function (props) {
   return (
@@ -17,11 +21,14 @@ export default function (props) {
       </div>
 
       {/* chart */}
-      <div>
-        <Plot layout={{ width: 600, height: 500 }} />
+      <div className="flex justify-center">
+        <Plot layout={{ height: 450 }} />
       </div>
 
       {/* slider for years */}
+      <div className="flex justify-center">
+        <SliderYears />
+      </div>
     </div>
   );
 }
