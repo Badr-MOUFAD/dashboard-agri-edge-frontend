@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function (props) {
+export function FooterComponent(props) {
   return (
     <section className="mx-2">
       <hr className="mt-6 mb-2" />

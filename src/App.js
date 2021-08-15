@@ -1,7 +1,7 @@
-import MapChartComponent from "./components/MapMoroccoChart";
-import CentroidsChartsComponents from "./components/CentroidsCharts";
-import RegionWeatherDetailComponent from "./components/RegionWeatherDetail";
-import FooterComponent from "./components/Footer";
+import MapChart from "./views/MapChart";
+import CentroidsClustersCharts from "./views/CentroidsClustersCharts";
+import DetailsWeatherCharts from "./views/DetailsWeatherCharts";
+import { FooterComponent } from "./components/Footer";
 
 export default function App() {
   return (
@@ -11,33 +11,33 @@ export default function App() {
         <section className="grid grid-cols-12 gap-4">
           {/* map container */}
           <div class="col-span-12 p-4 w-full shadow-lg bg-white dark:bg-gray-700 items-center h-full rounded-2xl z-40">
-            <MapChartComponent />
+            <MapChart />
           </div>
         </section>
 
         {/* graphs centroids container*/}
         <section className="grid grid-cols-12 gap-4">
           <div class="col-span-6 p-4 w-full shadow-lg bg-white items-center h-full rounded-2xl z-40">
-            <CentroidsChartsComponents />
+            <CentroidsClustersCharts />
           </div>
 
           <div class="col-span-6 p-4 w-full shadow-lg bg-white items-center h-full rounded-2xl z-40">
-            <CentroidsChartsComponents />
+            <CentroidsClustersCharts />
           </div>
 
           <div class="col-span-6 p-4 w-full shadow-lg bg-white items-center h-full rounded-2xl z-40">
-            <CentroidsChartsComponents />
+            <CentroidsClustersCharts />
           </div>
 
           <div class="col-span-6 p-4 w-full shadow-lg bg-white items-center h-full rounded-2xl z-40">
-            <CentroidsChartsComponents />
+            <CentroidsClustersCharts />
           </div>
         </section>
 
         {/* content region details */}
         <section className="grid grid-cols-12 gap-4">
           <div className="col-span-12 p-4 w-full shadow-lg bg-white dark:bg-gray-700 items-center h-full rounded-2xl z-40">
-            <RegionWeatherDetailComponent />
+            <DetailsWeatherCharts />
           </div>
         </section>
 

@@ -1,10 +1,9 @@
 import React from "react";
 import Plot from "react-plotly.js";
-import {
-  TitleComponent,
-  ToggleComponent,
-  SliderYears
-} from "./BasicComponents";
+
+import { TitleComponent } from "../components/Title";
+import { ToggleComponent } from "../components/Toggle";
+import { SliderYears } from "../components/SliderYears";
 
 export default function (props) {
   return (

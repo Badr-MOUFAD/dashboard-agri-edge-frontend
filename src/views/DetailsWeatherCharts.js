@@ -1,6 +1,9 @@
 import React from "react";
 import Plot from "react-plotly.js";
-import { TitleComponent, SideBar, InputYears } from "./BasicComponents";
+
+import { TitleComponent } from "../components/Title";
+import { SideBar } from "../components/Sidebar";
+import { InputYears } from "../components/InputYear";
 
 export default function (props) {
   return (

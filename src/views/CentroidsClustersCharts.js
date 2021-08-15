@@ -1,6 +1,6 @@
 import React from "react";
 import Plot from "react-plotly.js";
-import { TitleComponent } from "./BasicComponents";
+import { TitleComponent } from "../components/Title";
 
 export default function (props) {
   return (
