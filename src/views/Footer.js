@@ -3,10 +3,10 @@ import { GithubIcon } from "../icons/Organization";
 
 export function FooterComponent(props) {
   return (
-    <section className="mx-2">
+    <section className="px-2">
       <hr className="mt-6 mb-2" />
 
-      <div className="grid-col-12 flex justify-between">
+      <div className="grid-col-12 flex justify-between pb-4 px-4">
         <div className="col-span-2">
           <span className="text-sm text-gray-600">
             Dashboard by

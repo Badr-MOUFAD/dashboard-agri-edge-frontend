@@ -24,8 +24,8 @@ export function SliderYears(props) {
   }, [animate, selectedYear, playPause]);
 
   return (
-    <div className="flex items-center w-1/2 border rounded-lg shadow-sm px-8 py-1">
-      <span className="text-sm font-semibold">Crop years</span>
+    <div className="flex items-center w-1/2 border bg-gray-100 rounded-lg shadow-sm px-8 py-1">
+      <span className="text-sm text-gray-600 font">Crop years</span>
       <PlayPause
         playPause={playPause}
         playHandler={() => {

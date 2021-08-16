@@ -1,6 +1,6 @@
 import React from "react";
 
-export function SideBar(props) {
+export function VarPicker(props) {
   const { arrWeatherVars, selectedWeatherVar, clickHandler } = props;
 
   return (
