@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Plot from "react-plotly.js";
 
 import { TitleComponent } from "../components/Title";
-import { SideBar } from "../components/Sidebar";
+import { VarPicker } from "../components/VarPicker";
 import { InputYears } from "../components/InputYear";
 
 export default function (props) {
@@ -27,7 +27,7 @@ export default function (props) {
 
       <div className="grid grid-cols-12 gap-4">
         <div className="col-start-1 col-end-4">
-          <SideBar
+          <VarPicker
             arrWeatherVars={arrWeatherVars}
             selectedWeatherVar={selectedWeatherVar}
             clickHandler={(newWeatherVar) =>
