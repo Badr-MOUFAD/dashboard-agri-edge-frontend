@@ -51,7 +51,7 @@ export function SliderYears(props) {
         marks
         min={minYear}
         max={maxYear}
-        valueLabelDisplay="auto"
+        valueLabelDisplay={animate ? "on" : "auto"}
         value={selectedYear}
         onChange={(e, newYear) => {
           setSelectedYear(newYear);
@@ -64,7 +64,6 @@ export function SliderYears(props) {
 }
 
 export function PlayPause(props) {
-  // const [playPause, setPlayPause] = useState("play");
   const { playPause, playHandler, pauseHandler } = props;
 
   const toggleState = {

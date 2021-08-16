@@ -23,19 +23,43 @@ export function FooterComponent(props) {
 
         <div className="col-span-2">
           <span className="text-sm text-gray-600">
-            Internship at AgriEdge <br /> 2020-2021
+            Part of my Internship <br />{" "}
+            <a
+              className="hover:text-blue-600"
+              href="https://agriedge.um6p.ma/"
+              target="blank"
+            >
+              {" "}
+              Agri Edge
+            </a>{" "}
+            2020-2021
           </span>
         </div>
 
         <div className="col-span-2">
-          <span className="cursor-pointer">
-            <a
-              className="inline-flex flex items-center"
-              target="blank"
-              href="https://github.com/Badr-MOUFAD/dashboard-agri-edge-frontend"
-            >
-              <span className="text-sm text-gray-600 mr-2">Code source</span>{" "}
+          <span>
+            <span className="inline-flex flex items-center">
+              <span className="text-sm text-gray-600 mr-2">Source code</span>{" "}
               <GithubIcon color="gray-600" size="20" />
+            </span>
+          </span>
+          <br />
+          <span className="text-sm text-gray-600">
+            {" "}
+            <a
+              className="hover:text-blue-600"
+              href="https://github.com/Badr-MOUFAD/dashboard-agri-edge-frontend"
+              target="blank"
+            >
+              Dashboard{" "}
+            </a>
+            |{" "}
+            <a
+              className="hover:text-blue-600"
+              href="https://github.com/Badr-MOUFAD/dashboard-AgriEdge-data"
+              target="blank"
+            >
+              Data
             </a>
           </span>
         </div>

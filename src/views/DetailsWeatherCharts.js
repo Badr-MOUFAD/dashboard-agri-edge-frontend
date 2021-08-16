@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Plot from "react-plotly.js";
 
 import { TitleComponent } from "../components/Title";
@@ -6,6 +6,9 @@ import { SideBar } from "../components/Sidebar";
 import { InputYears } from "../components/InputYear";
 
 export default function (props) {
+  const [selectedWeatherVar, setSelectedWeatherVar] = useState("Precipitation");
+  const arrWeatherVars = ["Precipitation", "GDD", "Wind", "Humdity"];
+
   return (
     <React.Fragment>
       <div className="grid-cols-12 flex items-center justify-between gap-4">
@@ -24,7 +27,13 @@ export default function (props) {
 
       <div className="grid grid-cols-12 gap-4">
         <div className="col-start-1 col-end-4">
-          <SideBar />
+          <SideBar
+            arrWeatherVars={arrWeatherVars}
+            selectedWeatherVar={selectedWeatherVar}
+            clickHandler={(newWeatherVar) =>
+              setSelectedWeatherVar(newWeatherVar)
+            }
+          />
         </div>
 
         <div className="col-span-9">
