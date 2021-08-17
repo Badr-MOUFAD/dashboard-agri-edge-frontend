@@ -4,7 +4,8 @@ const initialState = {
   cropYears: generateCropYearObject(),
   typeClustering: "All weather variables",
   currentDisplayedCropYear: 1982,
-  currentLoadingYear: 1982
+  currentLoadingYear: 1982,
+  selectedRegion: { lat: null, lon: null } // as str of the form lat;lon
 };
 
 export const mapSlice = createSlice({
@@ -25,6 +26,9 @@ export const mapSlice = createSlice({
     changeTypeClustering: (state, action) => {
       state.typeClustering = action.payload;
       state.cropYears = generateCropYearObject();
+    },
+    changeSelectedRegion: (state, action) => {
+      state.selectedRegion = action.payload;
     }
   }
 });
@@ -33,14 +37,16 @@ export const mapSlectors = {
   cropYears: (state) => state.map.cropYears,
   typeClustering: (state) => state.map.typeClustering,
   currentDisplayedCropYear: (state) => state.map.currentDisplayedCropYear,
-  currentLoadingYear: (state) => state.map.currentLoadingYear
+  currentLoadingYear: (state) => state.map.currentLoadingYear,
+  selectedRegion: (state) => state.map.selectedRegion
 };
 
 export const {
   updateCropYear,
   changeTypeClustering,
   changeCurrentDisplayedCropYear,
-  updateCurrentLoadingYear
+  updateCurrentLoadingYear,
+  changeSelectedRegion
 } = mapSlice.actions;
 
 export default mapSlice.reducer;

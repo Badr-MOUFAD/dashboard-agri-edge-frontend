@@ -5,7 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   changeTypeClustering,
   updateCropYear,
-  updateCurrentLoadingYear
+  updateCurrentLoadingYear,
+  changeSelectedRegion
 } from "../redux/MapSlice";
 import { mapSlectors } from "../redux/MapSlice";
 
@@ -32,6 +33,8 @@ export default function (props) {
   const cropYearData = useSelector(mapSlectors.cropYears)[
     currentDisplayedCropYear
   ]["clusters"];
+  const isLoading = useSelector(mapSlectors.cropYears)[currentDisplayedCropYear]
+    .isLoading;
 
   useEffect(() => {
     // set method of fetch depending on selected mode
@@ -89,6 +92,7 @@ export default function (props) {
       {/* chart */}
       <div className="flex justify-center">
         <Plot
+          className={`animate-${isLoading ? "pulse" : "none"}`}
           data={["High", "Medium", "Low"].map((clusterName) => {
             return {
               type: "scattergeo",
@@ -111,12 +115,18 @@ export default function (props) {
               }
             }
           }}
+          onClick={({ points }) => {
+            // get lat and lon of selected regions
+            const { lat, lon } = points[0];
+
+            dispatch(changeSelectedRegion({ lat, lon }));
+          }}
         />
       </div>
 
       {/* slider for years */}
       <div className="flex justify-center">
-        <SliderYears />
+        <SliderYears isLoading={isLoading} />
       </div>
     </div>
   );
