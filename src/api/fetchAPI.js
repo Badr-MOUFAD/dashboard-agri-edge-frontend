@@ -1,8 +1,8 @@
 import axios from "axios";
 
 // import mappins to ids
-import mappingYearUniIds from "../mappingDB/year_uni_ids";
-import mappingYearMultiIds from "../mappingDB/year_multi_ids";
+import mappingYearUniIds from "../mappingDB/years_uni_ids";
+import mappingYearMultiIds from "../mappingDB/years_multi_ids";
 import mappingCentroidsIds from "../mappingDB/centroids_ids";
 
 const URL = "https://api.jsonstorage.net/v1/json";

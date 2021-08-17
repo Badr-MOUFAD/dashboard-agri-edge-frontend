@@ -2,8 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   cropYears: generateCropYearObject(),
-  typeClustering: "Multi Clustering",
-  currentLoadingYear: "1982"
+  typeClustering: "All weather variables",
+  currentDisplayedCropYear: 1982,
+  currentLoadingYear: 1982
 };
 
 export const mapSlice = createSlice({
@@ -11,12 +12,15 @@ export const mapSlice = createSlice({
   initialState: initialState,
   reducers: {
     updateCropYear: (state, action) => {
-      const { year, clusters } = action.payload;
+      const { year, isLoading, clusters } = action.payload;
 
-      state.cropYears[year] = clusters;
+      state.cropYears[year] = { isLoading, clusters };
     },
     updateCurrentLoadingYear: (state, action) => {
       state.currentLoadingYear = action.payload;
+    },
+    changeCurrentDisplayedCropYear: (state, action) => {
+      state.currentDisplayedCropYear = action.payload;
     },
     changeTypeClustering: (state, action) => {
       state.typeClustering = action.payload;
@@ -28,12 +32,14 @@ export const mapSlice = createSlice({
 export const mapSlectors = {
   cropYears: (state) => state.map.cropYears,
   typeClustering: (state) => state.map.typeClustering,
-  currentLoadingYear: (state) => state.map.updateCurrentLoadingYear
+  currentDisplayedCropYear: (state) => state.map.currentDisplayedCropYear,
+  currentLoadingYear: (state) => state.map.currentLoadingYear
 };
 
 export const {
   updateCropYear,
   changeTypeClustering,
+  changeCurrentDisplayedCropYear,
   updateCurrentLoadingYear
 } = mapSlice.actions;
 

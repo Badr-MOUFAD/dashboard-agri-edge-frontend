@@ -2,17 +2,24 @@ import React, { useState } from "react";
 
 export function ToggleComponent(props) {
   const [isToggle, setIsToggle] = useState("isToggleState");
+  const { changeTypeClusteringHandler } = props;
 
   const toogleStates = {
     isToggleState: {
       text: "Switch to precipitation",
       color: "blue",
-      clickHandler: () => setIsToggle("notToggleState")
+      clickHandler: () => {
+        setIsToggle("notToggleState");
+        changeTypeClusteringHandler("Precipitation");
+      }
     },
     notToggleState: {
       text: "Switch to all Weather Variables",
       color: "red",
-      clickHandler: () => setIsToggle("isToggleState")
+      clickHandler: () => {
+        setIsToggle("isToggleState");
+        changeTypeClusteringHandler("All weather variables");
+      }
     }
   };
 

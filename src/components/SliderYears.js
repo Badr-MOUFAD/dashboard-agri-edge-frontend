@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Slider } from "@material-ui/core";
 
+import { useDispatch } from "react-redux";
+import { changeCurrentDisplayedCropYear } from "../redux/MapSlice";
+
 import { PlayIcon, PauseIcon, ResetIcon } from "../icons/CoreIcons";
 
 const maxYear = 2020;
@@ -10,6 +13,8 @@ export function SliderYears(props) {
   const [selectedYear, setSelectedYear] = useState(1982);
   const [playPause, setPlayPause] = useState("play");
   const [animate, setAnimate] = useState(false);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (animate && selectedYear < maxYear) {
@@ -22,6 +27,11 @@ export function SliderYears(props) {
       setPlayPause("play");
     }
   }, [animate, selectedYear, playPause]);
+
+  // update selected year in redux store
+  useEffect(() => {
+    dispatch(changeCurrentDisplayedCropYear(selectedYear));
+  }, [selectedYear, dispatch]);
 
   return (
     <div className="flex items-center w-1/2 border bg-gray-100 rounded-lg shadow-sm px-8 py-1">
