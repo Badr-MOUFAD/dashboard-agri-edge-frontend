@@ -8,6 +8,7 @@ import { updateData, centroidsSlectors } from "../redux/CentroidsSlice";
 import { fetchCentroids } from "../api/fetchAPI";
 
 import { TitleComponent } from "../components/Title";
+import { SpinIcon } from "../icons/CoreIcons";
 
 const colorsClusters = {
   High: "#3B82F6",
@@ -19,8 +20,9 @@ export default function (props) {
   const dispatch = useDispatch();
 
   const selectedRegion = useSelector(mapSlectors.selectedRegion);
-  const isLoading = useSelector(centroidsSlectors.isLoading);
+  const isFetching = useSelector(centroidsSlectors.isLoading);
   const dataCentroids = useSelector(centroidsSlectors.dataCentroids);
+  const regionInfo = useSelector(centroidsSlectors.regionInfo);
 
   const arrWeatherVariable = ["Precipitation", "GDD", "Wind", "Humidity"];
 
@@ -28,7 +30,7 @@ export default function (props) {
     // fetch data
     if (selectedRegion.lat) {
       fetchCentroids(selectedRegion.lat, selectedRegion.lon)
-        .then((res, err) => {
+        .then((res) => {
           // explode data
           const {
             lat,
@@ -48,7 +50,7 @@ export default function (props) {
             Wind: cumulative_WS2M,
             Humidity: cumulative_RH2M
           };
-          const isLoading = true;
+          const isLoading = false;
 
           // dispatch new data to store
           dispatch(
@@ -66,27 +68,45 @@ export default function (props) {
   }, [selectedRegion, dispatch]);
 
   useEffect(() => {
-    console.log(dataCentroids);
+    console.log(isFetching);
   });
 
   return (
     <React.Fragment>
       {/* Header */}
-      <div className="grid-cols-3 flex justify-between">
+      <div className="grid-cols-3 flex">
         <div className="col-span-1">
           <TitleComponent
-            title="Clusters centroids"
-            subtitle={`${selectedRegion.lat};${selectedRegion.lon}`}
+            title={`Clusters centroids of the selected Region`}
+            subtitle={
+              <span>
+                {regionInfo.region} {regionInfo.name} <br />
+                {isFetching ||
+                  `Location: ${regionInfo.lat.toFixed(
+                    2
+                  )}, ${regionInfo.lon.toFixed(2)}`}
+              </span>
+            }
           />
+        </div>
+        <div className="col-span-1 ml-8">
+          {" "}
+          {isFetching && (
+            <span className="ml-8 flex">
+              <SpinIcon className="animate-spin fill-current text-black-600" />{" "}
+            </span>
+          )}
         </div>
       </div>
 
       <div className="grid grid-cols-12">
-        {arrWeatherVariable.map((weatherVariable) => {
+        {arrWeatherVariable.map((weatherVariable, i) => {
           return (
             <div
               key={`centroids-${weatherVariable}`}
-              className="col-span-6 w-full flex justify-center h-full z-40"
+              className={`col-span-6 w-full flex justify-center h-full z-40 ${
+                i === 0 && "border-r border-b"
+              } ${i === 3 && "border-l border-t"}`}
             >
               <Plot
                 data={["High", "Medium", "Low"].map((clusterName) => {
@@ -99,6 +119,7 @@ export default function (props) {
                   };
                 })}
                 layout={{ width: 400, height: 270, title: weatherVariable }}
+                className={isFetching && `animate-pulse`}
               />
             </div>
           );

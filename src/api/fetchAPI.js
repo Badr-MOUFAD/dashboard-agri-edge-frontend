@@ -4,6 +4,7 @@ import axios from "axios";
 import mappingYearUniIds from "../mappingDB/years_uni_ids";
 import mappingYearMultiIds from "../mappingDB/years_multi_ids";
 import mappingCentroidsIds from "../mappingDB/centroids_ids";
+import mappingRegionsWeatherIds from "../mappingDB/regions_weather_ids";
 
 const URL = "https://api.jsonstorage.net/v1/json";
 
@@ -30,4 +31,23 @@ export async function fetchCentroids(lat, lon) {
   }
 
   return axios.get(`${URL}/${mappingCentroidsIds[`${lat};${lon}`]}`);
+}
+
+export async function fetchWeatherRegion(lat, lon) {
+  const lon_ = String(lon).slice(0, String(lon).length - 1);
+  const lastDigit = String(lon).slice(-1);
+  const id = `${lat};${lon_}`;
+
+  // select suitable id
+  for (let i of [lastDigit, 7, 9, 3, 8, 0, 1, 2, 4, 5, 6]) {
+    try {
+      const res = await axios.get(
+        `${URL}/${mappingRegionsWeatherIds[`${id}${i}`]}`
+      );
+
+      return res;
+    } catch {}
+  }
+
+  return axios.get(`${URL}/${mappingRegionsWeatherIds[`${lat};${lon}`]}`);
 }

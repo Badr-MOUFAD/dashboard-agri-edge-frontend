@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Plot from "react-plotly.js";
 
+import { useSelector } from "react-redux";
+
 import { TitleComponent } from "../components/Title";
 import { VarPicker } from "../components/VarPicker";
 import { InputYears } from "../components/InputYear";

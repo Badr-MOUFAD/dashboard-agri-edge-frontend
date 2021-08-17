@@ -9,6 +9,7 @@ import {
   changeSelectedRegion
 } from "../redux/MapSlice";
 import { mapSlectors } from "../redux/MapSlice";
+import { resetData } from "../redux/CentroidsSlice";
 
 import { fetchRegionsMulti, fetchRegionsUni } from "../api/fetchAPI";
 
@@ -73,8 +74,12 @@ export default function (props) {
       <div className="grid-cols-3 flex justify-between">
         <div className="col-span-1">
           <TitleComponent
-            title="Morocco Map"
-            subtitle={`Cluster by region ${typeClustering}`}
+            title="Map of the Moroccan regions"
+            subtitle={
+              <span>
+                Cluster according to <b>{typeClustering}</b>
+              </span>
+            }
           />
         </div>
 
@@ -120,6 +125,7 @@ export default function (props) {
             const { lat, lon } = points[0];
 
             dispatch(changeSelectedRegion({ lat, lon }));
+            dispatch(resetData());
           }}
         />
       </div>

@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isLoading: true,
   regionInfo: {
-    lat: "",
-    lon: "",
+    lat: "", // 31.39102828115297;-5.17179828879979
+    lon: "", // 3
     region: "",
     name: ""
   },
@@ -29,6 +29,9 @@ export const centroidsSlice = createSlice({
 
       // data
       state.dataCentroids = dataCentroids;
+    },
+    resetData: (state, action) => {
+      state = initialState;
     }
   }
 });
@@ -39,6 +42,6 @@ export const centroidsSlectors = {
   dataCentroids: (state) => state.centroids.dataCentroids
 };
 
-export const { updateData } = centroidsSlice.actions;
+export const { updateData, resetData } = centroidsSlice.actions;
 
 export default centroidsSlice.reducer;
