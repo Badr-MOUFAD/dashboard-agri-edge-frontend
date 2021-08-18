@@ -15,7 +15,7 @@ export default function App() {
 
         <div className="col-span-10 flex flex-col w-full pl-0 md:p-4 md:space-y-4 mt-2">
           {/* content */}
-          <section className="grid grid-cols-12 gap-4">
+          <section id="map" className="grid grid-cols-12 gap-4">
             {/* map container */}
             <div className="col-span-12 p-4 w-full shadow-lg bg-white items-center h-full rounded-2xl z-40">
               <MapChart />
@@ -23,12 +23,15 @@ export default function App() {
           </section>
 
           {/* graphs centroids container*/}
-          <section className="p-4 w-full shadow-lg bg-white h-full rounded-2xl z-40">
+          <section
+            id="centroids"
+            className="p-4 w-full shadow-lg bg-white h-full rounded-2xl z-40"
+          >
             <CentroidsClustersCharts />
           </section>
 
           {/* content region details */}
-          <section className="grid grid-cols-12 gap-4">
+          <section id="details" className="grid grid-cols-12 gap-4">
             <div className="col-span-12 p-4 w-full shadow-lg bg-white dark:bg-gray-700 items-center h-full rounded-2xl z-40">
               <DetailsWeatherCharts />
             </div>
