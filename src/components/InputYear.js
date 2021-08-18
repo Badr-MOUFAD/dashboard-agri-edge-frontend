@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 
+import { ErrorIcon } from "../icons/CoreIcons";
+
 export function InputYears(props) {
   const [yearsSeperatedComma, setYearsSeperatedComma] = useState("");
+  const [error, setError] = useState(false);
+  const { enteredYearsHandler } = props;
 
   return (
     <div class="flex relative w-96">
@@ -15,7 +19,42 @@ export function InputYears(props) {
         placeholder="Enter years separated by ,"
         value={yearsSeperatedComma}
         onChange={({ target }) => setYearsSeperatedComma(target.value)}
+        onBlur={() => {
+          let arrYears = yearsSeperatedComma.split(",");
+
+          arrYears = arrYears.map((s) => {
+            let parsedValue = Number.isInteger(s);
+
+            if (parsedValue && 1982 <= parsedValue <= 2020) {
+              return parsedValue;
+            } else {
+              setError(true);
+              return NaN;
+            }
+          });
+
+          if (!arrYears.includes(NaN)) {
+            //enteredYearsHandler(arrYears);
+            setError(false);
+          }
+        }}
       />
+
+      <ErrorComponent error={error} />
     </div>
   );
+}
+
+export function ErrorComponent(props) {
+  const { error } = props;
+  if (true)
+    return (
+      <React.Fragment>
+        <ErrorComponent size={16} color="red-500" />
+        <p className="absolute text-sm text-red-500 -bottom-6">
+          Email is invalid
+        </p>
+      </React.Fragment>
+    );
+  else return <div></div>;
 }
