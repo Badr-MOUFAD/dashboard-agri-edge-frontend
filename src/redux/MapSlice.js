@@ -14,8 +14,14 @@ export const mapSlice = createSlice({
   reducers: {
     updateCropYear: (state, action) => {
       const { year, isLoading, clusters } = action.payload;
+      const error = false;
 
-      state.cropYears[year] = { isLoading, clusters };
+      state.cropYears[year] = { isLoading, error, clusters };
+    },
+    errorOccured: (state, action) => {
+      const { year } = action.payload;
+
+      state.cropYears[year].error = true;
     },
     updateCurrentLoadingYear: (state, action) => {
       state.currentLoadingYear = action.payload;
@@ -46,7 +52,8 @@ export const {
   changeTypeClustering,
   changeCurrentDisplayedCropYear,
   updateCurrentLoadingYear,
-  changeSelectedRegion
+  changeSelectedRegion,
+  errorOccured
 } = mapSlice.actions;
 
 export default mapSlice.reducer;

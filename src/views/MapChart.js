@@ -6,7 +6,8 @@ import {
   changeTypeClustering,
   updateCropYear,
   updateCurrentLoadingYear,
-  changeSelectedRegion
+  changeSelectedRegion,
+  errorOccured
 } from "../redux/MapSlice";
 import { mapSlectors } from "../redux/MapSlice";
 import { resetData } from "../redux/CentroidsSlice";
@@ -16,6 +17,7 @@ import { fetchRegionsMulti, fetchRegionsUni } from "../api/fetchAPI";
 import { TitleComponent } from "../components/Title";
 import { ToggleComponent } from "../components/Toggle";
 import { SliderYears } from "../components/SliderYears";
+import { FeedbackComponent } from "../components/Feedback";
 
 const colorsClusters = {
   High: "#3B82F6",
@@ -36,6 +38,9 @@ export default function (props) {
   ]["clusters"];
   const isLoading = useSelector(mapSlectors.cropYears)[currentDisplayedCropYear]
     .isLoading;
+
+  const error = useSelector(mapSlectors.cropYears)[currentDisplayedCropYear]
+    .error;
 
   useEffect(() => {
     // set method of fetch depending on selected mode
@@ -64,6 +69,7 @@ export default function (props) {
         })
         .catch((err) => {
           console.log(err);
+          dispatch(errorOccured({ year: currentLoadingYear }));
         });
     }
   }, [typeClustering, currentLoadingYear, dispatch]);
@@ -82,6 +88,8 @@ export default function (props) {
             }
           />
         </div>
+
+        <FeedbackComponent error={error} isLoading={isLoading} />
 
         <div className="col-span-2">
           <ToggleComponent

@@ -4,7 +4,7 @@ import { Slider } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { changeCurrentDisplayedCropYear } from "../redux/MapSlice";
 
-import { PlayIcon, PauseIcon, ResetIcon, SpinIcon } from "../icons/CoreIcons";
+import { PlayIcon, PauseIcon, ResetIcon } from "../icons/CoreIcons";
 
 const maxYear = 2020;
 const minYear = 1982;
@@ -71,12 +71,6 @@ export function SliderYears(props) {
           setPlayPause("play");
         }}
       />
-
-      {isLoading && (
-        <span className="ml-8">
-          <SpinIcon className="animate-spin fill-current text-blue-600" />
-        </span>
-      )}
     </div>
   );
 }

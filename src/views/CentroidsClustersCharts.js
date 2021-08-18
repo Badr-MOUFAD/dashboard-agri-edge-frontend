@@ -3,12 +3,16 @@ import Plot from "react-plotly.js";
 
 import { useSelector, useDispatch } from "react-redux";
 import { mapSlectors } from "../redux/MapSlice";
-import { updateData, centroidsSlectors } from "../redux/CentroidsSlice";
+import {
+  updateData,
+  centroidsSlectors,
+  errorOccured
+} from "../redux/CentroidsSlice";
 
 import { fetchCentroids } from "../api/fetchAPI";
 
 import { TitleComponent } from "../components/Title";
-import { SpinIcon } from "../icons/CoreIcons";
+import { FeedbackComponent } from "../components/Feedback";
 
 const colorsClusters = {
   High: "#3B82F6",
@@ -20,9 +24,10 @@ export default function (props) {
   const dispatch = useDispatch();
 
   const selectedRegion = useSelector(mapSlectors.selectedRegion);
-  const isFetching = useSelector(centroidsSlectors.isLoading);
+  const isLoading = useSelector(centroidsSlectors.isLoading);
   const dataCentroids = useSelector(centroidsSlectors.dataCentroids);
   const regionInfo = useSelector(centroidsSlectors.regionInfo);
+  const error = useSelector(centroidsSlectors.error);
 
   const arrWeatherVariable = ["Precipitation", "GDD", "Wind", "Humidity"];
 
@@ -63,13 +68,10 @@ export default function (props) {
         })
         .catch((err) => {
           console.log(err);
+          dispatch(errorOccured());
         });
     }
   }, [selectedRegion, dispatch]);
-
-  useEffect(() => {
-    console.log(isFetching);
-  });
 
   return (
     <React.Fragment>
@@ -81,7 +83,7 @@ export default function (props) {
             subtitle={
               <span>
                 {regionInfo.region} {regionInfo.name} <br />
-                {isFetching ||
+                {isLoading ||
                   `Location: ${regionInfo.lat.toFixed(
                     2
                   )}, ${regionInfo.lon.toFixed(2)}`}
@@ -90,12 +92,11 @@ export default function (props) {
           />
         </div>
         <div className="col-span-1 ml-8">
-          {" "}
-          {isFetching && (
-            <span className="ml-8 flex">
-              <SpinIcon className="animate-spin fill-current text-black-600" />{" "}
-            </span>
-          )}
+          <FeedbackComponent
+            notSelected={!Boolean(selectedRegion.lat)}
+            isLoading={isLoading}
+            error={error}
+          />
         </div>
       </div>
 
@@ -118,8 +119,15 @@ export default function (props) {
                     name: clusterName
                   };
                 })}
-                layout={{ width: 400, height: 270, title: weatherVariable }}
-                className={isFetching && `animate-pulse`}
+                layout={{
+                  width: 400,
+                  height: 270,
+                  title: weatherVariable,
+                  xaxis: {
+                    title: "days"
+                  }
+                }}
+                className={isLoading && `animate-pulse`}
               />
             </div>
           );

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  error: false,
   isLoading: true,
   regionInfo: {
     lat: "", // 31.39102828115297;-5.17179828879979
@@ -8,7 +9,7 @@ const initialState = {
     region: "",
     name: ""
   },
-  dataWeather: {
+  weatherData: {
     Precipitation: {}, // { 1982: [], ...}
     GDD: {},
     Wind: {},
@@ -21,27 +22,39 @@ export const regionWeatherSlice = createSlice({
   initialState: initialState,
   reducers: {
     updateData: (state, action) => {
-      const { isLoading, regionInfo, dataWeather } = action.payload;
+      const { isLoading, regionInfo, weatherData } = action.payload;
 
       // infos
       state.isLoading = isLoading;
       state.regionInfo = regionInfo;
 
       // data
-      state.dataWeather = dataWeather;
+      state.weatherData = weatherData;
+
+      // error
+      state.error = false;
     },
     resetData: (state, action) => {
-      state = initialState;
+      state.isLoading = true;
+      state.error = false;
+    },
+    errorOccured: (state, action) => {
+      state.error = true;
     }
   }
 });
 
-export const regionWeatherSlectors = {
+export const regionWeatherSelectors = {
   isLoading: (state) => state.regionWeather.isLoading,
+  error: (state) => state.regionWeather.error,
   regionInfo: (state) => state.regionWeather.regionInfo,
-  dataCentroids: (state) => state.regionWeather.dataWeather
+  weatherData: (state) => state.regionWeather.weatherData
 };
 
-export const { updateData, resetData } = regionWeatherSlice.actions;
+export const {
+  updateData,
+  resetData,
+  errorOccured
+} = regionWeatherSlice.actions;
 
 export default regionWeatherSlice.reducer;

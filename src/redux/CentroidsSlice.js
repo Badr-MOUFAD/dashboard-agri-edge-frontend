@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  error: false,
   isLoading: true,
   regionInfo: {
     lat: "", // 31.39102828115297;-5.17179828879979
@@ -29,19 +30,27 @@ export const centroidsSlice = createSlice({
 
       // data
       state.dataCentroids = dataCentroids;
+
+      // error
+      state.error = false;
     },
     resetData: (state, action) => {
-      state = initialState;
+      state.isLoading = true;
+      state.error = false;
+    },
+    errorOccured: (state, action) => {
+      state.error = true;
     }
   }
 });
 
 export const centroidsSlectors = {
   isLoading: (state) => state.centroids.isLoading,
+  error: (state) => state.centroids.error,
   regionInfo: (state) => state.centroids.regionInfo,
   dataCentroids: (state) => state.centroids.dataCentroids
 };
 
-export const { updateData, resetData } = centroidsSlice.actions;
+export const { updateData, resetData, errorOccured } = centroidsSlice.actions;
 
 export default centroidsSlice.reducer;

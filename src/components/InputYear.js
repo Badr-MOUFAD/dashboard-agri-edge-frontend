@@ -15,17 +15,21 @@ export function InputYears(props) {
       <input
         type="text"
         id="input-years"
-        className="rounded-r-full flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-grey-600 focus:border-transparent ring-red-500 ring-2"
+        className={`rounded-r-full flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-grey-600 focus:border-transparent ${
+          error && "ring-red-500 ring-2"
+        }`} //
         placeholder="Enter years separated by ,"
         value={yearsSeperatedComma}
         onChange={({ target }) => setYearsSeperatedComma(target.value)}
         onBlur={() => {
-          let arrYears = yearsSeperatedComma.split(",");
+          // split and remove empty stings
+          let arrYears = yearsSeperatedComma.split(",").filter((s) => s);
 
           arrYears = arrYears.map((s) => {
-            let parsedValue = Number.isInteger(s);
+            let parsedValue = Number(s);
+            parsedValue = Number.isInteger(parsedValue) ? parsedValue : false;
 
-            if (parsedValue && 1982 <= parsedValue <= 2020) {
+            if (parsedValue && 1982 <= parsedValue && parsedValue <= 2020) {
               return parsedValue;
             } else {
               setError(true);
@@ -34,31 +38,17 @@ export function InputYears(props) {
           });
 
           if (!arrYears.includes(NaN)) {
-            //enteredYearsHandler(arrYears);
+            enteredYearsHandler(arrYears);
             setError(false);
           }
         }}
       />
 
-      <p className="flex absolute text-xs -bottom-4 text-red-500">
-        Email is invalid
-      </p>
+      {error && (
+        <p className="flex absolute text-xs -bottom-4 text-red-500">
+          Enter years between 1982 - 2020 separted by comma
+        </p>
+      )}
     </div>
   );
-}
-
-export function ErrorComponent(props) {
-  const { error } = props;
-  if (error) {
-    return (
-      <React.Fragment>
-        <ErrorComponent size={16} color="red-500" />
-        <p className="absolute text-sm text-red-500 -bottom-6">
-          Email is invalid
-        </p>
-      </React.Fragment>
-    );
-  } else {
-    return <div></div>;
-  }
 }
