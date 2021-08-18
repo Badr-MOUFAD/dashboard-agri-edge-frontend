@@ -1,6 +1,6 @@
 import React from "react";
 
-import { SpinIcon, InfoIcon, ErrorIcon } from "../icons/CoreIcons";
+import { SpinIcon, ErrorIcon, ArrowUpIcon } from "../icons/CoreIcons";
 
 export function FeedbackComponent(props) {
   const { notSelected, isLoading, error } = props;
@@ -18,7 +18,7 @@ export function FeedbackComponent(props) {
   if (notSelected) {
     return (
       <div className="flex inline items-center">
-        <InfoIcon
+        <ArrowUpIcon
           className="fill-current text-blue-500 animate-bounce"
           size="24"
         />
