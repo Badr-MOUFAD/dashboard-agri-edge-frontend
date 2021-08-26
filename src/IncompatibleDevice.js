@@ -2,7 +2,7 @@ import React from "react";
 
 export default function (props) {
   return (
-    <div className="lg:flex lg:grid lg:grid-cols-2">
+    <div className="lg:flex lg:grid lg:grid-cols-2 lg:items-center">
       <div className="my-8 p-16 flex justify-center lg:order-last">
         <Illustration className="sm:w-full sm:h-full md:w-3/4 md:h-3/4 lg:w-1/2 lg:w-1/2" />
       </div>

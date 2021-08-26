@@ -136,9 +136,3 @@ export default function (props) {
     </React.Fragment>
   );
 }
-
-export function ClusterCentroiChart(props) {
-  const { weatherVariable } = props;
-
-  return <Plot layout={{ width: 400, height: 300, title: weatherVariable }} />;
-}

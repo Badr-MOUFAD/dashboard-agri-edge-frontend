@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { appSelectors, changeActiveSection } from "../redux/AppSlice";
+import { mapSlectors } from "../redux/MapSlice";
+
+import { exportAsJson } from "../api/downloadAPI";
 
 import {
   MapIcon,
   ChartIcon,
   FilledFourChartsIcon,
-  FourChartsIcon
+  DownloadIcon
 } from "../icons/CoreIcons";
 
 export function Sidebar(props) {
@@ -33,9 +36,38 @@ export function Sidebar(props) {
     "border-r-2 border-blue-500 bg-gradient-to-l from-blue-100";
 
   const activeSection = useSelector(appSelectors.activeSection);
+  const selectedRegion = useSelector(mapSlectors.selectedRegion);
+  const cropYears = useSelector(mapSlectors.cropYears);
+
   const dispatch = useDispatch();
 
+  const [error, setError] = useState(false);
+
   const { arrSectionsRef } = props;
+
+  const extractClusterRegion = () => {
+    // total number of days in a crop year
+    const nbDays = 269;
+    const clustersRegion = { High: [], Medium: [], Low: [] };
+
+    for (let year of cropYears) {
+      // select clusters of current crop year
+      const clustersYear = cropYears[year].clusters;
+
+      for (let clusterName of clustersYear) {
+        for (let i = 0; i < nbDays; i++) {
+          const lat = clustersYear[clusterName].lat[i];
+          const lon = clustersYear[clusterName].lon[i];
+
+          if (lat === selectedRegion.lat && lon === selectedRegion.lon) {
+            clustersRegion[clusterName].push(year);
+          }
+        }
+      }
+    }
+
+    return clustersRegion;
+  };
 
   return (
     <div className="pb-4 pt-2">
@@ -60,6 +92,38 @@ export function Sidebar(props) {
           </div>
         );
       })}
+
+      <div className="px-2 font-bold text-lg mb-6 mt-4">Export clusters</div>
+      <div className="font-base text-sm text-gray-500 px-2 mb-2">
+        Download as <span className="font-bold">.json</span> format, the
+        clusters of the selected region
+      </div>
+      <div className="py-4 px-2">
+        <div
+          className="flex justify-around cursor-pointer grid-cols-2 items-center py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-sm font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 opacity-70 rounded-lg"
+          onClick={() => {
+            if (!selectedRegion.lat) {
+              setError(true);
+            } else {
+              const clustersRegion = extractClusterRegion();
+              const filename = `${selectedRegion.lat};${selectedRegion.lon}.json`;
+
+              exportAsJson(clustersRegion, filename);
+              setError(false);
+            }
+          }}
+        >
+          <span className="span-col-1">Export</span>{" "}
+          <DownloadIcon
+            size="24"
+            className="span-col-1 fill-current text-white"
+          />
+        </div>
+
+        {error && (
+          <span className="text-xs text-red-500">Select a region!</span>
+        )}
+      </div>
     </div>
   );
 }
