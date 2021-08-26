@@ -42,6 +42,8 @@ export default function (props) {
   const error = useSelector(mapSlectors.cropYears)[currentDisplayedCropYear]
     .error;
 
+  const selectedRegion = useSelector(mapSlectors.selectedRegion);
+
   useEffect(() => {
     // set method of fetch depending on selected mode
     const fetchMethod =
@@ -73,6 +75,33 @@ export default function (props) {
         });
     }
   }, [typeClustering, currentLoadingYear, dispatch]);
+
+  // data to plot
+  // clusters
+  const data = ["High", "Medium", "Low"].map((clusterName) => {
+    return {
+      type: "scattergeo",
+      lat: cropYearData[clusterName]["lat"],
+      lon: cropYearData[clusterName]["lon"],
+      hovertext: cropYearData[clusterName]["name"],
+      name: clusterName,
+      marker: {
+        color: colorsClusters[clusterName]
+      }
+    };
+  });
+  // selected region
+  data.push({
+    type: "scattergeo",
+    lat: [selectedRegion.lat],
+    lon: [selectedRegion.lon],
+    name: "Selected region",
+    marker: {
+      color: "#18181B",
+      size: 8
+    },
+    showlegend: false
+  });
 
   return (
     <div>
@@ -106,18 +135,7 @@ export default function (props) {
       <div className="flex justify-center">
         <Plot
           className={`animate-${isLoading ? "pulse" : "none"}`}
-          data={["High", "Medium", "Low"].map((clusterName) => {
-            return {
-              type: "scattergeo",
-              lat: cropYearData[clusterName]["lat"],
-              lon: cropYearData[clusterName]["lon"],
-              hovertext: cropYearData[clusterName]["name"],
-              name: clusterName,
-              marker: {
-                color: colorsClusters[clusterName]
-              }
-            };
-          })}
+          data={data}
           layout={{
             height: 450,
             title: `Corresponding cluster of regions (${currentDisplayedCropYear})`,

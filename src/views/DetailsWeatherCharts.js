@@ -16,6 +16,16 @@ import { VarPicker } from "../components/VarPicker";
 import { InputYears } from "../components/InputYear";
 import { FeedbackComponent } from "../components/Feedback";
 
+const colorsPlots = [
+  "#3B82F6",
+  "#34D399",
+  "#F87171",
+  "#F97316",
+  "#8B5CF6",
+  "#F43F5E",
+  "#71717A"
+];
+
 export default function (props) {
   const selectedRegion = useSelector(mapSlectors.selectedRegion);
   const weatherData = useSelector(regionWeatherSelectors.weatherData);
@@ -101,11 +111,11 @@ export default function (props) {
 
         <div className="col-span-9">
           <Plot
-            data={yearsToDisplay.map((year) => {
+            data={yearsToDisplay.map((year, i) => {
               return {
                 type: "scatter",
                 y: weatherData[selectedWeatherVar][year],
-                marker: { color: "#3B82F6", size: 2 },
+                marker: { color: colorsPlots[i % colorsPlots.length], size: 2 },
                 mode: "markers+lines",
                 name: year
               };
