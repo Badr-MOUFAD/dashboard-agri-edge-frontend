@@ -1,5 +1,8 @@
 import React, { useRef } from "react";
 
+import { useDispatch } from "react-redux";
+import { changeActiveSection } from "./redux/AppSlice";
+
 import MapChart from "./views/MapChart";
 import CentroidsClustersCharts from "./views/CentroidsClustersCharts";
 import DetailsWeatherCharts from "./views/DetailsWeatherCharts";
@@ -10,6 +13,25 @@ export default function App() {
   const mapSection = useRef(null);
   const centroidsSection = useRef(null);
   const regionWeatherSection = useRef(null);
+
+  const dispatch = useDispatch();
+
+  const arrSectionRefName = [
+    { ref: mapSection, section: "Map of clusters" },
+    { ref: centroidsSection, section: "Region centroids" },
+    { ref: regionWeatherSection, section: "Region weather" }
+  ];
+
+  // activate tabs in side bar when scrolling
+  window.addEventListener("scroll", () => {
+    arrSectionRefName.forEach((item) => {
+      const boundSection = item.ref.current.getBoundingClientRect();
+
+      if (Math.abs(boundSection.top) < 10) {
+        dispatch(changeActiveSection(item.section));
+      }
+    });
+  });
 
   return (
     <main className="bg-gray-100 h-full w-full relative">
