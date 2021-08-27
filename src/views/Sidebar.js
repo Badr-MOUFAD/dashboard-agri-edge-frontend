@@ -46,8 +46,8 @@ export function Sidebar(props) {
   const { arrSectionsRef } = props;
 
   const extractClusterRegion = (cropYears) => {
-    // total number of days in a crop year
-    const nbDays = 269;
+    // total number of region
+    const nbRegions = 705;
     const clustersRegion = { High: [], Medium: [], Low: [] };
 
     for (let year in cropYears) {
@@ -55,11 +55,14 @@ export function Sidebar(props) {
       const clustersYear = cropYears[year].clusters;
 
       for (let clusterName in clustersYear) {
-        for (let i = 0; i < nbDays; i++) {
+        for (let i = 0; i < nbRegions; i++) {
           const lat = clustersYear[clusterName].lat[i];
           const lon = clustersYear[clusterName].lon[i];
 
-          if (lat === selectedRegion.lat && lon === selectedRegion.lon) {
+          if (
+            Math.abs(lat - selectedRegion.lat) < 10 ** -2 &&
+            Math.abs(lon - selectedRegion.lon) < 10 ** -2
+          ) {
             clustersRegion[clusterName].push(year);
           }
         }
