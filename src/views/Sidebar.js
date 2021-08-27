@@ -45,16 +45,16 @@ export function Sidebar(props) {
 
   const { arrSectionsRef } = props;
 
-  const extractClusterRegion = () => {
+  const extractClusterRegion = (cropYears) => {
     // total number of days in a crop year
     const nbDays = 269;
     const clustersRegion = { High: [], Medium: [], Low: [] };
 
-    for (let year of cropYears) {
+    for (let year in cropYears) {
       // select clusters of current crop year
       const clustersYear = cropYears[year].clusters;
 
-      for (let clusterName of clustersYear) {
+      for (let clusterName in clustersYear) {
         for (let i = 0; i < nbDays; i++) {
           const lat = clustersYear[clusterName].lat[i];
           const lon = clustersYear[clusterName].lon[i];
@@ -105,7 +105,7 @@ export function Sidebar(props) {
             if (!selectedRegion.lat) {
               setError(true);
             } else {
-              const clustersRegion = extractClusterRegion();
+              const clustersRegion = extractClusterRegion(cropYears);
               const filename = `${selectedRegion.lat};${selectedRegion.lon}.json`;
 
               exportAsJson(clustersRegion, filename);
